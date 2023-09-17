@@ -36,5 +36,4 @@ class StampRecord(models.Model):
     stamp = models.ForeignKey(Stamp, on_delete=models.CASCADE)
     is_collected = models.BooleanField(default=False)
     
-    def __str__(self):
-        return f'{self.user_name} - {self.stamp.full_name}'
+    
