@@ -1,13 +1,17 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>main</title>
+    <title>Main Page</title>
 </head>
 <body>
-    <h1>main page</h1>
-    <nav>
-        <a href="{% url 'user_page' %}">사용자 페이지</a>
-        <a href="{% url 'manager_page' %}">관리자 페이지</a>
-    </nav>
+    <h1>Main Page</h1>
+    <form method="post">
+        {% csrf_token %}
+        <label for="student_id">학번:</label>
+        <input type="text" name="student_id" required><br>
+        <label for="major">학과:</label>
+        <input type="text" name="major" required><br>
+        <input type="submit" value="조회">
+    </form>
 </body>
 </html>
