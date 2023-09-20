@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>도장 목록</title>
+</head>
+<body>
+    
+    <h1>도장 목록</h1>
+    <ul>
+        {% for stamp in stamps %}
+            <li><img src="{{ stamp.before_image.files }}" alt="{{ stamp.event_name }}">
+                <img src="{{ stamp.after_image.files }}" alt="{{ stamp.event_name }}">
+            - {{ stamp.event_info }}</li>
+        {% endfor %}
+    </ul>
+    <a href="{% url 'add_stamp' %}">도장 추가</a>
+</body>
+</html>
+{% comment %} {{ MEDIA_URL }} <form method='post' enctype="multipart/form-data"> {% endcomment %}

@@ -5,6 +5,7 @@
 </head>
 <body>
     <h1>Main Page</h1>
+    <a href="{% url 'manager_page' %}">관리자 페이지</a>
     <form method="post">
         {% csrf_token %}
         <label for="student_id">학번:</label>
