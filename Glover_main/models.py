@@ -40,5 +40,15 @@ class student(models.Model):
 @receiver(post_save, sender=stamp)
 def create_stamp_collection(sender, instance, **kwargs):
     students = student.objects.all()
+    
     for student_instance in students:
         stamp_collection.objects.create(student=student_instance, stamp=instance)
+        
+        
+# 학생 추가되면 기존 스탬프 추가
+@receiver(post_save, sender=student)
+def create_student_stamp_collection(sender, instance, **kwargs):
+    stamps = stamp.objects.all()
+    
+    for stamp_instance in stamps:
+        stamp_collection.objects.get_or_create(student=instance, stamp=stamp_instance)
