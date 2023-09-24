@@ -30,7 +30,7 @@
             <td>before_image : <input type="file" name="before_image" accept=".jpg, .jpeg, .png, .gif"></td>
             <td>
                 {% if stamp_instance.before_image %}
-                    <img src="{{ stamp_instance.before_image.url }}" alt="Before Image">
+                    <img src="{{ stamp_instance.before_image.url }}" alt="Before Image" width="100" height="100">
                     <input type="file" style="display:none;">
                 {% endif %}
             </td>
@@ -39,7 +39,7 @@
             <td>after_image : <input type="file" name="after_image" accept=".jpg, .jpeg, .png, .gif"></td>
             <td>
                 {% if stamp_instance.after_image %}
-                    <img src="{{ stamp_instance.after_image.url }}" alt="After Image">
+                    <img src="{{ stamp_instance.after_image.url }}" alt="After Image" width="100" height="100">
                     <input type="file" style="display:none;">
                 {% endif %}
             </td>
@@ -54,7 +54,6 @@
             <p>변경 사항을 저장하시겠습니까?</p>
             <button id="confirm-save">예</button>
             <button id="cancel-save" type="button">아니요</button>
-
         </div>  
         <!-- 저장하지 않고 나가기 버튼 -->
         <button id="stop-action-button"> X </button>
@@ -97,8 +96,12 @@
 
     // 예 버튼 클릭 시 이전 페이지로 돌아가기
     document.getElementById('confirm-leave').addEventListener('click', function() {
-        window.history.back(); // 브라우저에서 이전 페이지로 이동
+        // 이 부분에서 브라우저의 기본 동작을 막아야 합니다.
+        event.preventDefault();
+        // 여기에서 저장되지 않고 이전 페이지로 돌아가는 JavaScript 코드를 추가합니다.
+        window.location.href = document.referrer; // 이전 페이지로 이동
     });
+
 
     // 아니오 버튼 클릭 시 팝업 창 닫기
     document.getElementById('cancel-leave').addEventListener('click', function() {

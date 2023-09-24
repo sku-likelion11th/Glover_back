@@ -3,6 +3,9 @@ from django.contrib import messages
 from .models import student, stamp, stamp_collection
 from django.db.models import F
 from django.db import transaction
+from django.core.files.storage import FileSystemStorage
+from django.conf import settings
+import os
 
 # Create your views here.
 # 메인페이지
@@ -132,22 +135,28 @@ def edit_stamp(request, event_name):
     stamp_instance = get_object_or_404(stamp, event_name=event_name)
     
     if request.method == 'POST':
-        # 수정할 내용을 POST 데이터에서 가져와서 저장하거나 업데이트합니다.
-        stamp_instance.event_name = request.POST.get('event_name')
-        stamp_instance.event_info = request.POST.get('event_info')
-        stamp_instance.event_start = request.POST.get('event_start')
-        stamp_instance.event_end = request.POST.get('event_end')
-        stamp_instance.before_image = request.FILES['before_image'] if 'before_image' in request.FILES else None
-        stamp_instance.after_image = request.FILES['after_image'] if 'after_image' in request.FILES else None
-        # 사진을 업데이트하는 경우
-        # if 'before_image' in request.FILES:
-        #     stamp_instance.before_image = request.FILES['before_image']
-        # if 'after_image' in request.FILES:
-        #     stamp_instance.after_image = request.FILES['after_image']
+        # POST 데이터에서 가져와서 업데이트
+        updated_data = {'event_name': request.POST.get('event_name'),
+                        'event_info': request.POST.get('event_info'),
+                        'event_start': request.POST.get('event_start'),
+                        'event_end': request.POST.get('event_end')}
+    
+        # 이미지 업데이트 처리
+        before_image = request.FILES.get('before_image')
+        if before_image:
+            # FileSystemStorage사용하여 이미지 저장
+            fs = FileSystemStorage(location=os.path.join(settings.MEDIA_ROOT, 'before_images'))
+            filename = fs.save(before_image.name, before_image)
+            updated_data['before_image'] = filename
         
-        # 변경 사항 저장
-        stamp_instance.save()
-        
+        after_image = request.FILES.get('after_image')
+        if after_image:
+            fs = FileSystemStorage(location=os.path.join(settings.MEDIA_ROOT, 'after_images'))
+            filename = fs.save(after_image.name, after_image)
+            updated_data['after_image'] = filename
+            
+        # DB에 직접 업뎃
+        stamp.objects.filter(event_name=event_name).update(**updated_data)
         return redirect('stamp_list')  # 수정 후 도장 목록으로 리디렉션
         
     return render(request, 'manager_page/edit_stamp.html', {'stamp_instance': stamp_instance})

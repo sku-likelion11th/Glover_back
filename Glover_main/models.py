@@ -36,7 +36,7 @@ class student(models.Model):
         return f'{self.student_id} - {self.major} - {self.full_name}'
     
     
-# stamp추가할 때 마다 모든 학생에 중계모델 추가
+# stamp추가할 때마다 중계모델에 추가
 @receiver(post_save, sender=stamp)
 def create_stamp_collection(sender, instance, **kwargs):
     students = student.objects.all()
@@ -47,8 +47,9 @@ def create_stamp_collection(sender, instance, **kwargs):
         
 # 학생 추가되면 기존 스탬프 추가
 @receiver(post_save, sender=student)
-def create_student_stamp_collection(sender, instance, **kwargs):
-    stamps = stamp.objects.all()
+def create_student_stamp_collection(sender, instance, created, **kwargs):
+    if created:
+        stamps = stamp.objects.all()
     
-    for stamp_instance in stamps:
-        stamp_collection.objects.get_or_create(student=instance, stamp=stamp_instance)
+        for stamp_instance in stamps:
+            stamp_collection.objects.get_or_create(student=instance, stamp=stamp_instance)
