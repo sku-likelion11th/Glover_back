@@ -7,6 +7,7 @@ from django.db import transaction
 from django.core.files.storage import FileSystemStorage
 from django.conf import settings
 import os
+from django.http import JsonResponse
 
 # Create your views here.
 # 메인페이지
@@ -26,6 +27,20 @@ def main(request, student_id=None):
         return render(request, 'user_page/search.html', {'student_info': student_info, 'stamp_collections':stamp_collections, 'agreed': agreed})
 
     return render(request, 'user_page/index.html')
+
+
+# 동의 업뎃
+def update_consent(request):
+    if request.method == 'POST':
+        student_id = request.POST.get('student_id')
+        try:
+            student = student.objects.get(pk=student_id)
+            student.consent = True
+            student.save()
+            return JsonResponse({'success': True})
+        except student.DoesNotExist:
+            return JsonResponse({'success': False, 'error': 'Student not found'})
+    return JsonResponse({'success': False, 'error': 'Invalid request method'})
 
 
 # 서비스 소개

@@ -8,21 +8,17 @@ var modal = document.getElementById("modal");
 // 폼 제출 이벤트 핸들러 등록
 form.addEventListener("submit", function(event) {
     event.preventDefault(); // 폼 제출 방지
-    var agreeButton = document.getElementById("agree_Btn");
 
     // 모달 창 열기
-    // modal.style.display = "block";
+    modal.style.display = "block";
 });
 
-
 // 동의 버튼 누를 때
-document.getElementById('agree-Btn').addEventListener('agree', function() {
-    // AJAX 요청을 사용하여 서버에 동의 업데이트 요청을 보냅니다.
-
-    // Vanilla JavaScript를 사용하는 경우:
+document.getElementById('agree_Btn').addEventListener('agree', function() {
     var student_id = 1;  // 학생의 ID를 여기에 설정
     var xhr = new XMLHttpRequest();
-    xhr.open('POST', '/update-consent/', true);
+
+    xhr.open('POST', '/main/', true);
     xhr.setRequestHeader('Content-Type', 'application/json');
     xhr.onreadystatechange = function() {
         if (xhr.readyState === 4 && xhr.status === 200) {
@@ -30,21 +26,19 @@ document.getElementById('agree-Btn').addEventListener('agree', function() {
             if (response.success) {
                 // 동의 업데이트가 성공한 경우
                 // 모달을 닫거나 다음 단계로 이동합니다.
-                document.getElementById('consent-modal').style.display = 'none';
+                document.getElementById('login').submit();
             }
         }
     };
     xhr.send(JSON.stringify({ student_id: student_id }));
 });
 
-
-// 첫 번째 모달창 닫기 버튼 
-var closeBtn = document.querySelector(".close");
+// 첫 번째 모달창(동의서) 닫기 버튼 
+var closeBtn = document.querySelector(".close button");
 closeBtn.addEventListener("click", function() {
+
     modal.style.display = "none"; // 모달 닫기
 });
-
-
 
 
 // 첫 번째 모달창에서 두 번째 모달창으로 넘어가는 코드
