@@ -11,7 +11,7 @@ form.addEventListener("submit", function(event) {
     var agreeButton = document.getElementById("agree_Btn");
 
     // 모달 창 열기
-    modal.style.display = "block";
+    // modal.style.display = "block";
 });
 
 
