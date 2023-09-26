@@ -14,7 +14,9 @@
                     스탬프 이름: {{ collection.stamp.event_name }}<br>
                     수집 여부: {{ collection.is_collected }}
                     {% if collection.is_collected %}
-                        <img src="{{ collection.stamp.after_image.url }}" alt="수집 이미지" width="100" height="100">
+                    <a href="{% url 'info_stamp' collection.stamp.event_name %}">
+                        <img src="{{ collection.stamp.before_image.url }}" alt="미수집 이미지" width="100" height="100">
+                  </a>
                     {% else %}
                         <img src="{{ collection.stamp.before_image.url }}" alt="미수집 이미지" width="100" height="100">
                     {% endif %}

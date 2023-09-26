@@ -1,5 +1,6 @@
 from django.urls import path
 from .views import *
+from .views import info_stamp
 from django.conf import settings
 from django.conf.urls.static import static
 
@@ -14,7 +15,7 @@ urlpatterns = [
     path('delete_stamp/<str:event_name>/', delete_stamp, name='delete_stamp'),
     path('edit_X_check/', edit_X_check, name='edit_X_check'),
     path('edit_save_check/', edit_save_check, name='edit_save_check'),
-
+    path('info_stamp/<str:event_name>/', info_stamp, name='info_stamp'),
 ]
 
 if settings.DEBUG:
