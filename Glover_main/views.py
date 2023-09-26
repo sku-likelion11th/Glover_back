@@ -8,6 +8,7 @@ from django.core.files.storage import FileSystemStorage
 from django.conf import settings
 import os
 from django.http import JsonResponse
+from urllib.parse import unquote
 
 # Create your views here.
 # 메인페이지
@@ -187,6 +188,14 @@ def delete_stamp(request, event_name):
         delstamp.delete()
         return redirect('stamp_list')
     return render(request, 'manager_page/stamp_list.html', {'delstamp': delstamp})
+
+# stamp 정보 보기
+def info_stamp(request, event_name):
+    event_name = unquote(event_name)
+    # 스탬프 정보 가져오기
+    stamp_instance = get_object_or_404(stamp, event_name=event_name)
+    
+    return render(request, 'main_page/info_stamp.html', {'stamp_instance': stamp_instance})
 
 
 # X버튼 확인
