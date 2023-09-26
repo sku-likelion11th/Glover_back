@@ -1,22 +1,3 @@
-{% comment %} <!DOCTYPE html>
-<html>
-<head>
-    <title>도장 목록</title>
-</head>
-<body>
-    
-    <h1>도장 목록</h1>
-    <ul>
-        {% for stamp in stamps %}
-            <li><img src="{{ stamp.before_image.url }}" alt="{{ stamp.event_name }}">
-                <img src="{{ stamp.after_image.url }}" alt="{{ stamp.event_name }}">
-            - {{ stamp.event_info }}</li>
-        {% endfor %}
-    </ul>
-    <a href="{% url 'add_stamp' %}">도장 추가</a>
-</body>
-</html> {% endcomment %}
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -29,8 +10,7 @@
         {% for stamp in stamps %}
             <li>
                 <div class="image-preview">
-                    <img src="{{ stamp.before_image.url }}" alt="Before Image Preview" width="100" height="100">
-                    <img src="{{ stamp.after_image.url }}" alt="After Image Preview" width="100" height="100">
+                    <img src="{{ stamp.image.url }}" alt="After Image Preview" width="100" height="100">
                 </div>
             - {{ stamp.event_info }}
             <a href="{% url 'edit_stamp' stamp.event_name %}">수정</a> <!-- 수정 링크 추가 -->

@@ -8,8 +8,7 @@ class stamp(models.Model):
     event_info = models.TextField()
     event_start = models.DateField()
     event_end = models.DateField()
-    before_image = models.ImageField(upload_to='before_images/')
-    after_image = models.ImageField(upload_to='after_images/')
+    image = models.ImageField(upload_to='images/')
     
     def __str__(self):
         return self.event_name
@@ -29,11 +28,12 @@ class student(models.Model):
     full_name = models.CharField(max_length=20)
     major = models.CharField(max_length=100)
     grade = models.IntegerField()
+    consent = models.BooleanField(default=False)
     
     stamps = models.ManyToManyField(stamp, through='stamp_collection', related_name='collectors')
     
     def __str__(self):
-        return f'{self.student_id} - {self.major} - {self.full_name}'
+        return f'{self.student_id} - {self.major} - {self.full_name} - {self.consent}'
     
     
 # stamp추가할 때마다 중계모델에 추가

@@ -23,7 +23,6 @@
 
     <form method="POST" action="{% url 'user_check' %}">
         {% csrf_token %}
-        
         <!-- 이벤트 조회 드롭다운!-->
         <label for="event_dropdown">이벤트 조회:</label>
         <select id="event_dropdown" name="event_name">
@@ -74,7 +73,7 @@
                     <strong>선택</strong>
                 </div>
             </li>
-            {% for student in students %}
+            {% comment %} {% for student in students %}
                 <li class="student-row">
                     <div>
                         {{ student.major }}
@@ -86,13 +85,32 @@
                         {{ student.full_name }}
                     </div>
                     <div>
-                        {% for stamp_collection in student.stamp_collection_set.all %}
-                            {% comment %} {% if stamp_collection.stamp == selected_event %} {% endcomment %}
+                        {% for stamp_collection in stamp_collections %}
+                            {% if stamp_collection.student_id == student.student_id %}
                             <input type="checkbox" name="event_check" value="{{ stamp_collection.id }}" {% if stamp_collection.is_collected %} checked {% endif %}>
-                            {% comment %} {% endif %} {% endcomment %}
+                            {% endif %}
                         {% endfor %}
+                    </div>
+                </li>
+            {% endfor %} {% endcomment %}
 
-                        {% comment %} <input type="checkbox" name="event_check" value="{{ student.student_id }}" {% if student.is_collected %}checked{% endif %}> {% endcomment %}
+            {% for student in stamp_collections %}
+                <li class="student-row">
+                    <div>
+                        {{ student.student.major }}
+                    </div>
+                    <div>
+                        {{ student.student_id }}
+                    </div>
+                    <div>
+                        {{ student.student.full_name }}
+                    </div>
+                    <div>
+                        {% comment %} {% for stamp_collection in stamp_collections %}
+                            {% if stamp_collection.student_id == student.student_id %} {% endcomment %}
+                            <input type="checkbox" name="event_check" value="{{ student.id }}" {% if student.is_collected %} checked {% endif %}>
+                            {% comment %} {% endif %}
+                        {% endfor %} {% endcomment %}
                     </div>
                 </li>
             {% endfor %}

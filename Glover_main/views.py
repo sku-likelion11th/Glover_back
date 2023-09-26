@@ -1,7 +1,8 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from .models import student, stamp, stamp_collection
-from django.db.models import F
+from django.http import HttpResponse
+from django.contrib.sessions.models import Session
 from django.db import transaction
 from django.core.files.storage import FileSystemStorage
 from django.conf import settings
@@ -15,34 +16,33 @@ def main(request, student_id=None):
         major = request.POST.get('major')
 
         student_info = student.objects.get(student_id=student_id, major=major)
-        # 동의하지 않았다면
-        # if not request.session.get('consent_given'):
-        #     return redirect('main_page/consent.html')
-        
         stamp_collections = stamp_collection.objects.filter(student=student_info)
-  
-        return render(request, 'main_page/user_page.html', {'student_info': student_info, 'stamp_collections':stamp_collections})
 
-    return render(request, 'main_page/main.html')
+        agreed = student.objects.get(student_id=student_id)
+        agreed.consent = True
+        # is_agreed = agreed.consent
+        # print(is_agreed)
+
+        return render(request, 'user_page/search.html', {'student_info': student_info, 'stamp_collections':stamp_collections, 'agreed': agreed})
+
+    return render(request, 'user_page/index.html')
 
 
-# 동의서 세션 저장
-def consent(request):
-    if request.method == 'POST':
-        # 동의 버튼을 눌렀을 때
-        # 세션에 동의 여부를 저장하고 메인 페이지로 이동
-        request.session['consent_given'] = True
-        messages.success(request, '동의하였습니다.')
-        return redirect('main')
-    
-    return render(request, 'Glover_back/consent.html')
+# 서비스 소개
+def introduce(request):
+	return render(request, 'user_page/introduce.html')
+
+
+# 만든이들
+def makers(request):
+	return render(request, 'user_page/makers.html')
 
 
 # 관리자 페이지
-def manager_page(request):
+def a_main(request):
 	return render(
 		request,
-		'manager_page/manager_page.html'
+		'admin_page/a_main.html'
 	)
 
 
@@ -53,18 +53,16 @@ def add_stamp(request):
         event_info = request.POST['event_info']
         event_start = request.POST['event_start']
         event_end = request.POST['event_end']
-        before_image = request.FILES.get('before_image') if 'before_image' in request.FILES else None
-        after_image = request.FILES.get('after_image') if 'after_image' in request.FILES else None
+        image = request.FILES.get('after_image') if 'after_image' in request.FILES else None
 
         # 데이터 유효성 검사 및 저장
-        if event_name and event_info and event_start and event_end  and before_image and after_image: #and before_image
+        if event_name and event_info and event_start and event_end and image:
             mystamp = stamp (
                 event_name = event_name,
                 event_info = event_info,
                 event_start = event_start,
                 event_end = event_end,
-                before_image = before_image,
-                after_image = after_image,
+                image = image,
             )
             mystamp.save()
             return redirect('stamp_list')
@@ -96,17 +94,16 @@ def user_check(request):
 
         if event_name:
            selected_event = stamp.objects.get(event_name=event_name)
-        #    students_stamp = stamp_collection.objects.filter(stamp_collection__stamp=selected_event)
 
         if major:
            students = students.filter(major=major)
 
         if student_id:
-           students = students.filter(student_id=student_id)
-        print(selected_event)
-        # print(students_stamp)
-        # 선택된 이벤트의 체크박스 확인 후, 해당 학생의 student_collection을 업데이트
+           students = students.filter(student_id__icontains=student_id)
+        
+        # 선택된 이벤트의 체크박스 확인 후 해당 학생의 student_collection을 업데이트
         event_check = request.POST.getlist('event_check')
+        
         for stamp_collection_id in event_check:
             try:
                 collection = stamp_collection.objects.get(id=stamp_collection_id)
@@ -115,15 +112,19 @@ def user_check(request):
                 collection.save()
             except stamp_collection.DoesNotExist:
                 pass
-        print(event_check)
-        stamp_collections = stamp_collection.objects.filter(student_id=event_check, stamp=selected_event)
         
+        if student_id:
+            stamp_collections = stamp_collection.objects.filter(student__student_id__icontains=student_id, stamp=selected_event)
+        else:
+            # student_id가 None이면 stamp_collections를 빈 쿼리셋으로 초기화
+            stamp_collections = stamp_collection.objects.none()
+
         context = {'students': students, 
                    'events': events, 
                    'initial_data': request.POST, 
                    'stamp_collections':stamp_collections,
                    }
-        
+
         return render(request, 'manager_page/user_check.html', context)
 
     return render(request, 'manager_page/user_check.html', {'events': events, 'students': students})
@@ -169,21 +170,15 @@ def delete_stamp(request, event_name):
     if request.method == 'POST':
         # Store the post pk before deleting the comment
         delstamp.delete()
-        return redirect('stamp_list')  # Redirect to the correct post detail page
-    return render(request, 'manager_page/delete_check.html', {'delstamp': delstamp})
+        return redirect('stamp_list')
+    return render(request, 'manager_page/stamp_list.html', {'delstamp': delstamp})
 
 
 # X버튼 확인
-def edit_X_check(request):
-	return render(
-		request,
-		'manager_page/edit_X_check.html'
-	)
+# def edit_X_check(request):
+# 	return render(request, 'manager_page/edit_X_check.html')
 
 
-# 저장하시겠습니까
-def edit_save_check(request):
-	return render(
-		request,
-		'manager_page/edit_save_check.html'
-	)
+# # 저장하시겠습니까
+# def edit_save_check(request):
+# 	return render(request, 'manager_page/edit_save_check.html')
