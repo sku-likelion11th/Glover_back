@@ -19,8 +19,6 @@
         }
     </style>
 
-
-
     <form method="POST" action="{% url 'user_check' %}">
         {% csrf_token %}
         <!-- 이벤트 조회 드롭다운!-->
@@ -62,7 +60,7 @@
     </form>
 
     <!-- 조회된 학생 목록 -->
-    <form method="POST" action="{% url 'user_check' %}">
+    <form class='check' id='check' method="POST" action="{% url 'user_check' %}">
         {% csrf_token %}
         <ul>
             <li class="student-row">
@@ -108,14 +106,41 @@
                     <div>
                         {% comment %} {% for stamp_collection in stamp_collections %}
                             {% if stamp_collection.student_id == student.student_id %} {% endcomment %}
-                            <input type="checkbox" name="event_check" value="{{ student.id }}" {% if student.is_collected %} checked {% endif %}>
+                            {% comment %} <input type="checkbox" name="event_check" value="{{ student.id }}" {% if student.is_collected %} checked {% endif %}> {% endcomment %}
+                            {% comment %} <input type="checkbox" name="event_check" value="{{ student.is_collected }}" data-initial-state="{% if stamp_collection.is_collected %}true{% else %}false{% endif %}" {% if student.is_collected %} checked {% endif %}> {% endcomment %}
+                            <input type="checkbox" name="event_check" id='cb_{{ student.id }}' value="{{ student.id }}" {% if student.is_collected %} checked {% endif %}>
+                            <input type="hidden" name="hiddenInput" id='hiddenInput_{{ student.id }}' value="{{ student.is_collected }}">
+                            <input type="hidden" name="hiddenInput2" id='hiddenInput2_{{ student.id }}' value="{{ student.id }}">
                             {% comment %} {% endif %}
                         {% endfor %} {% endcomment %}
                     </div>
                 </li>
             {% endfor %}
         </ul>
-        <input type="submit" value="이벤트 참여">
+        <input id='complete' type="submit" value="이벤트 참여">
     </form>
+
+<script>
+// 원본 체크박스 요소와 따라가는 체크박스 요소 선택
+var checkboxes = document.querySelectorAll('input[type="checkbox"][id^="cb_"]');
+var hiddenInputs = document.querySelectorAll('input[type="hidden"][id^="hiddenInput_"]');
+
+for (var i = 0; i < checkboxes.length; i++) {
+    var checkbox = checkboxes[i];
+    var hiddenInput = hiddenInputs[i];
+
+    // 이벤트 리스너 함수 내부에서 hiddenInput 변수를 유지
+    checkbox.addEventListener("change", function (currentHiddenInput) {
+        return function () {
+            if (this.checked) {
+                currentHiddenInput.value = "True";
+            } else {
+                currentHiddenInput.value = "False";
+            }
+        };
+    }(hiddenInput)); // 즉시 실행 함수를 사용하여 클로저 생성
+}
+</script>
+
 </body>
 </html>

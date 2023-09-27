@@ -31,18 +31,16 @@ def main(request, student_id=None):
 
 
 # 동의 업뎃
-def update_consent(request):
-    if request.method == 'POST':
-        student_id = request.POST.get('student_id')
-        try:
-            student = student.objects.get(pk=student_id)
-            student.consent = True
-            student.save()
-            return JsonResponse({'success': True})
-        except student.DoesNotExist:
-            return JsonResponse({'success': False, 'error': 'Student not found'})
-    return JsonResponse({'success': False, 'error': 'Invalid request method'})
+def check_consent(request):
+    if request.method == 'GET':
+        # 여기에서 사용자의 consent 상태를 확인하고 값을 가져옵니다.
+        # 예를 들어, 현재 로그인한 사용자의 consent 상태를 확인할 수 있습니다.
+        user = request.student
+        consent_status = user.profile.consent  # 사용자 프로필에 consent 필드가 있다고 가정
 
+        return JsonResponse({'consent_status': consent_status})
+    else:
+        return JsonResponse({'error': 'GET 요청이 아닙니다.'})
 
 # 서비스 소개
 def introduce(request):
@@ -58,7 +56,7 @@ def makers(request):
 def a_main(request):
 	return render(
 		request,
-		'admin_page/a_main.html'
+		'manager_page/manager_page.html'
 	)
 
 
@@ -118,15 +116,19 @@ def user_check(request):
            students = students.filter(student_id__icontains=student_id)
         
         # 선택된 이벤트의 체크박스 확인 후 해당 학생의 student_collection을 업데이트
-        event_check = request.POST.getlist('event_check')
+        event_check1 = request.POST.getlist('hiddenInput')
+        event_check2 = request.POST.getlist('hiddenInput2')
         
-        for stamp_collection_id in event_check:
+        for stamp_collection_id, is_collected_str in zip(event_check2, event_check1):
             try:
+                # is_collected_str 값을 불리언 값으로 변환하여 사용
+                is_collected = is_collected_str.lower() == 'true'
+
                 collection = stamp_collection.objects.get(id=stamp_collection_id)
-                # is_collected 값 반전
-                collection.is_collected = not collection.is_collected
+
+                collection.is_collected = is_collected
                 collection.save()
-            except stamp_collection.DoesNotExist:
+            except:
                 pass
         
         if student_id:
