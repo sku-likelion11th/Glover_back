@@ -21,9 +21,10 @@ def main(request, student_id=None):
         stamp_collections = stamp_collection.objects.filter(student=student_info)
 
         agreed = student.objects.get(student_id=student_id)
-        agreed.consent = True
-        # is_agreed = agreed.consent
-        # print(is_agreed)
+
+        # 동의 여부 확인 및 세션 업데이트
+        if not request.session.get('agreed', False):
+            request.session['agreed'] = True
 
         return render(request, 'user_page/search.html', {'student_info': student_info, 'stamp_collections':stamp_collections, 'agreed': agreed})
 
@@ -190,12 +191,19 @@ def delete_stamp(request, event_name):
     return render(request, 'manager_page/stamp_list.html', {'delstamp': delstamp})
 
 # stamp 정보 보기
-def info_stamp(request, event_name):
-    event_name = unquote(event_name)
-    # 스탬프 정보 가져오기
-    stamp_instance = get_object_or_404(stamp, event_name=event_name)
-    
-    return render(request, 'main_page/info_stamp.html', {'stamp_instance': stamp_instance})
+# def info_stamp(request, event_name):
+#     try:
+#         stamp_instance = stamp.objects.get(event_name=event_name)
+#         data = {
+#             'event_name': stamp_instance.event_name,
+#             'event_info': stamp_instance.event_info,
+#             'event_start': stamp_instance.event_start.strftime('%Y-%m-%d'),
+#             'event_end': stamp_instance.event_end.strftime('%Y-%m-%d'),
+#             # 필요한 다른 정보들을 여기에 추가
+#         }
+#         return JsonResponse(data)
+#     except stamp.DoesNotExist:
+#         return JsonResponse({'error': 'Event not found'}, status=404)
 
 
 # X버튼 확인

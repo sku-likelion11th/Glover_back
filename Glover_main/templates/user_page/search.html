@@ -97,14 +97,14 @@
                 </div>
                 <section class="stampset">
                     {% for collection in stamp_collections %}
-                    <button class="stamp1">
-                        {% if collection.is_collected %}
-                        <img src="{{ collection.stamp.image.url }}" alt="수집 이미지" width="100" height="100">
-                        {% else %}
-                            <img src={% static "images/stamp1.png" %} alt="미수집 이미지" width="100" height="100">
-                        {% endif %}
-                    </button>
-                    {% endfor %}
+                        <button class="stamp1" data-name="{{ collection.stamp.event_name }}" data-info="{{ collection.stamp.event_info }}" data-start="{{ collection.stamp.event_start }}" data-end="{{ collection.stamp.event_end }}">
+                            {% if collection.is_collected %}
+                            <img src="{{ collection.stamp.image.url }}" alt="수집 이미지" width="100" height="100">
+                            {% else %}
+                            <img src='{% static "images/stamp1.png" %}' alt="미수집 이미지" width="100" height="100">
+                    {% endif %}
+                </button>
+                {% endfor %}
                 </section>
             </div>
         </div>
