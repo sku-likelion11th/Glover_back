@@ -5,21 +5,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>글 Lover</title>
-    <link rel="stylesheet" href={% static "css/makers.css" %}>
-    <script src={% static "js/makers.js" %} defer></script>
+    <link rel="stylesheet" href={% static "css/makers.css"%}>
+    <script src={% static "js/makers.js"%} defer></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
     <!-- font awesome 연결링크 -->
     <script src="https://kit.fontawesome.com/855cb859ed.js" crossorigin="anonymous"></script>
 </head>
 <body>
-    <div class="display-container tmoney-font">
+    <div class="display-container jamsil-font">
         <!-- nav section -->
         <nav>
             <div class="navbar tmoney-font">
                 <div class="container nav-container">
                     <div class="nav_logo">
-                        <a href="../main/index.html">
-                            <img src="../../img/gloverlogo.png" alt="">
+                        <a href={% url 'main' %}>
+                            <img src={% static "images/gloverlogo.png"%} alt="">
                         </a>
                     </div>
                     <input class="checkbox" type="checkbox" name="" id="" />
@@ -31,13 +31,13 @@
                     <div class="menu-items">
                         <div class="menu_durumari d-flex flex-column text-center">
                             <div class="menu_logo text-center">
-                                <img src="../../img/gloverlogo.png" alt="">
+                                <img src={% static "images/gloverlogo.png"%} alt="">
                             </div>
                             <p class="tmoney font-bold">청천(靑天)</p>
                             <p class="tmoney">글로벌경영기술대학</p>
                             <div class="menu_line"></div>
-                            <li><a href="../introduce/introduce.html"><p class="shilla">서비스 소개</p><br /></a></li>
-                            <li><a href="../makers/makers.html"><p class="shilla">만든이들</p></a></li>
+                            <li><a href={% url 'introduce' %}><p class="shilla">서비스 소개</p><br /></a></li>
+                            <li><a href={% url 'makers' %}><p class="shilla">만든이들</p></a></li>
                             <div class="menu_line"></div>
                             <div class="menu_footer">
                                 <div class="firstline d-flex justify-content-center">
@@ -64,22 +64,22 @@
                 <p class="header_name header-font">만든이들</p>
             </div>
             <div class="background_img">
-                <img src="../../img/cloud.png" alt="구름2" class="cloud1">                
-                <img src="../../img/cloud.png" alt="구름2" class="cloud2">
-                <img src="../../img/cloud.png" alt="구름3" class="cloud3">
-                <img src="../../img/cloud.png" alt="구름4" class="cloud4">
-                <img src="../../img/cloud.png" alt="구름5" class="cloud5">
-                <img src="../../img/cloud.png" alt="구름6" class="cloud6">
-                <img src="../../img/cloud.png" alt="구름7" class="cloud7">
-                <img src="../../img/cloud.png" alt="구름8" class="cloud8">
-                <img src="../../img/cloud.png" alt="구름9" class="cloud9">
+                <img src={% static "images/cloud.png"%} alt="구름2" class="cloud1">                
+                <img src={% static "images/cloud.png"%} alt="구름2" class="cloud2">
+                <img src={% static "images/cloud.png"%} alt="구름3" class="cloud3">
+                <img src={% static "images/cloud.png"%} alt="구름4" class="cloud4">
+                <img src={% static "images/cloud.png"%} alt="구름5" class="cloud5">
+                <img src={% static "images/cloud.png"%} alt="구름6" class="cloud6">
+                <img src={% static "images/cloud.png"%} alt="구름7" class="cloud7">
+                <img src={% static "images/cloud.png"%} alt="구름8" class="cloud8">
+                <img src={% static "images/cloud.png"%} alt="구름9" class="cloud9">
             </div>
         </div>
         <!-- logo section -->
         <div class="logo_section d-flex justify-content-around text-center">
             <div class="logo_glover">
                 <div class="glover_icon text-center">
-                    <img src="../../img/gloverlogo.png" alt="">
+                    <img src={% static "images/gloverlogo.png"%} alt="">
                 </div>
                 <div class="logo_header text-center">
                     <p class="color">청천(靑天)</p>
@@ -87,11 +87,11 @@
                 </div>
             </div>
             <div class="handshake">
-                <lottie-player src={% static "json/handshake.json" %} background="transparent"  speed="1"  style="width: 100px; height: auto;" loop autoplay></lottie-player>
+                <lottie-player src={% static "json/handshake.json"%} background="transparent"  speed="1"  style="width: 100px; height: auto;" loop autoplay></lottie-player>
             </div>
             <div class="logo_likelion">
                 <div class="likelion_icon text-center">
-                    <img src="../../img/likelion.png" alt="">
+                    <img src={% static "images/likelion.png"%} alt="">
                 </div>
                 <div class="logo_header text-center">
                     <p class="color">성결대학교</p>
@@ -111,7 +111,7 @@
         <div class="makers">
             <div class="team d-flex flex-column text-center">
                 <div class="makers_logo">
-                    <img src="../../img/gloverlogo.png" alt="">
+                    <img src={% static "images/gloverlogo.png"%} alt="">
                 </div>
                 <p class="color">제 2대 글로벌경영기술대학</p>
                 <p>@sku_2_bluesky</p>
@@ -120,9 +120,9 @@
             <div class="glover-section d-flex justify-content-center text-center">
                 <div class="box_tool">
                     <div class="m_box">
-                        <div class="m_mimo"><img src="../../img/glovermimo/parkhyeonwoo.png" alt=""></div>
+                        <div class="m_mimo"><img src={% static "images/glovermimo/parkhyeonwoo.png"%} alt=""></div>
                         <div class="m_line2 d-flex justify-content-center">
-                            <div class="m_icon"><img src="../../img/gloverlogo.png" alt=""></div>
+                            <div class="m_icon"><img src={% static "images/gloverlogo.png"%} alt=""></div>
                             <div class="m_name">박현우</div>
                         </div>
                         <div class="m_depart">산업경영공업학과 17</div>
@@ -132,9 +132,9 @@
                 </div>
                 <div class="box_tool">
                     <div class="m_box">
-                        <div class="m_mimo"><img src="../../img/glovermimo/dajeong.png" alt=""></div>
+                        <div class="m_mimo"><img src={% static "images/glovermimo/dajeong.png"%} alt=""></div>
                         <div class="m_line2 d-flex justify-content-center">
-                            <div class="m_icon"><img src="../../img/gloverlogo.png" alt=""></div>
+                            <div class="m_icon"><img src={% static "images/gloverlogo.png"%} alt=""></div>
                             <div class="m_name">정다정</div>
                         </div>
                         <div class="m_depart">동아시아물류학부 21</div>
@@ -144,9 +144,9 @@
                 </div>
                 <div class="box_tool">
                     <div class="m_box">
-                        <div class="m_mimo"><img src="../../img/glovermimo/leecheayoung.png" alt=""></div>
+                        <div class="m_mimo"><img src={% static "images/glovermimo/leecheayoung.png"%} alt=""></div>
                         <div class="m_line2 d-flex justify-content-center">
-                            <div class="m_icon"><img src="../../img/gloverlogo.png" alt=""></div>
+                            <div class="m_icon"><img src={% static "images/gloverlogo.png"%} alt=""></div>
                             <div class="m_name">이채영</div>
                         </div>
                         <div class="m_depart">산업경영공업학과 21</div>
@@ -156,9 +156,9 @@
                 </div>
                 <div class="box_tool">
                     <div class="m_box">
-                        <div class="m_mimo"><img src="../../img/glovermimo/kimcheawoon.png" alt=""></div>
+                        <div class="m_mimo"><img src={% static "images/glovermimo/kimcheawoon.png"%} alt=""></div>
                         <div class="m_line2 d-flex justify-content-center">
-                            <div class="m_icon"><img src="../../img/gloverlogo.png" alt=""></div>
+                            <div class="m_icon"><img src={% static "images/gloverlogo.png"%} alt=""></div>
                             <div class="m_name">김채운</div>
                         </div>
                         <div class="m_depart">유통물류학과 21</div>
@@ -170,7 +170,7 @@
             <!-- likelion makers -->    
             <div class="team d-flex flex-column text-center">
                 <div class="makers_logo">
-                    <img src="../../img/likelion.png" alt="">
+                    <img src={% static "images/likelion.png"%} alt="">
                 </div>
                 <p class="color">멋쟁이사자처럼 11기</p>
                 <p>@likelion_sku</p>
@@ -178,9 +178,9 @@
             <div class="likelion-section d-flex justify-content-center text-center">
                 <div class="box_tool">
                     <div class="m_box">
-                        <div class="m_mimo"><img src="../../img/likelionmimo/kcj.png" alt=""></div>
+                        <div class="m_mimo"><img src={% static "images/likelionmimo/kcj.png"%} alt=""></div>
                         <div class="m_line2 d-flex justify-content-center">
-                            <div class="m_icon2"><img src="../../img/likelion.png" alt=""></div>
+                            <div class="m_icon2"><img src={% static "images/likelion.png"%} alt=""></div>
                             <div class="m_name">고창준</div>
                         </div>
                         <div class="m_depart">컴퓨터공학과 19</div>
@@ -190,9 +190,9 @@
                 </div>
                 <div class="box_tool">
                     <div class="m_box">
-                        <div class="m_mimo"><img src="../../img/likelionmimo/austrailia.png" alt=""></div>
+                        <div class="m_mimo"><img src={% static "images/likelionmimo/austrailia.png"%} alt=""></div>
                         <div class="m_line2 d-flex justify-content-center">
-                            <div class="m_icon2"><img src="../../img/likelion.png" alt=""></div>
+                            <div class="m_icon2"><img src={% static "images/likelion.png"%} alt=""></div>
                             <div class="m_name">문호주</div>
                         </div>
                         <div class="m_depart">컴퓨터공학과 19</div>
@@ -202,9 +202,9 @@
                 </div>
                 <div class="box_tool">
                     <div class="m_box">
-                        <div class="m_mimo"><img src="../../img/likelionmimo/enseo.png" alt=""></div>
+                        <div class="m_mimo"><img src={% static "images/likelionmimo/enseo.png"%} alt=""></div>
                         <div class="m_line2 d-flex justify-content-center">
-                            <div class="m_icon2"><img src="../../img/likelion.png" alt=""></div>
+                            <div class="m_icon2"><img src={% static "images/likelion.png"%} alt=""></div>
                             <div class="m_name">김은서</div>
                         </div>
                         <div class="m_depart">미디어소프트웨어학과 21</div>
@@ -214,9 +214,9 @@
                 </div>
                 <div class="box_tool">
                     <div class="m_box">
-                        <div class="m_mimo"><img src="../../img/likelionmimo/junyeong.png" alt=""></div>
+                        <div class="m_mimo"><img src={% static "images/likelionmimo/junyeong.png"%} alt=""></div>
                         <div class="m_line2 d-flex justify-content-center">
-                            <div class="m_icon2"><img src="../../img/likelion.png" alt=""></div>
+                            <div class="m_icon2"><img src={% static "images/likelion.png"%} alt=""></div>
                             <div class="m_name">조준영</div>
                         </div>
                         <div class="m_depart">정보통신학과 21</div>
@@ -226,9 +226,9 @@
                 </div>
                 <div class="box_tool">
                     <div class="m_box">
-                        <div class="m_mimo"><img src="../../img/likelionmimo/mingyu.png" alt=""></div>
+                        <div class="m_mimo"><img src={% static "images/likelionmimo/mingyu.png"%} alt=""></div>
                         <div class="m_line2 d-flex justify-content-center">
-                            <div class="m_icon2"><img src="../../img/likelion.png" alt=""></div>
+                            <div class="m_icon2"><img src={% static "images/likelion.png"%} alt=""></div>
                             <div class="m_name">한민규</div>
                         </div>
                         <div class="m_depart">컴퓨터공학과 21</div>
@@ -238,9 +238,9 @@
                 </div>
                 <div class="box_tool">
                     <div class="m_box">
-                        <div class="m_mimo"><img src="../../img/likelionmimo/minseo.png" alt=""></div>
+                        <div class="m_mimo"><img src={% static "images/likelionmimo/minseo.png"%} alt=""></div>
                         <div class="m_line2 d-flex justify-content-center">
-                            <div class="m_icon2"><img src="../../img/likelion.png" alt=""></div>
+                            <div class="m_icon2"><img src={% static "images/likelion.png"%} alt=""></div>
                             <div class="m_name">신민서</div>
                         </div>
                         <div class="m_depart">미디어소프트웨어학과 22</div>
@@ -251,7 +251,7 @@
             </div>
         </div>
         <div class="hill">
-            <img src="../../img/hill.png" alt="">
+            <img src={% static "images/hill.png"%} alt="">
         </div>
     </div>
     <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>

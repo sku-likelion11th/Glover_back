@@ -17,7 +17,7 @@ submitButton.addEventListener("click", function() {
 // 첫 번째 모달창 닫기 버튼 
 var closeBtn = document.querySelector(".close");
 closeBtn.addEventListener("click", function() {
-
+    
     modal.style.display = "none"; // 모달 닫기
     element.classList.remove('blur-effect'); // "blur" 클래스 제거
 });

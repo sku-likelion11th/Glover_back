@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>글 Lover</title>
-    <link rel="stylesheet" href={% static "css/style.css" %}>
+    <link rel="stylesheet" href={% static "css/style.css"%}>
     <script src={% static "js/main.js" %} defer></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
     <!-- font awesome 연결링크 -->
@@ -15,7 +15,7 @@
     <div class="display-container header-font">
         <!-- navbar section -->
         <nav>
-            <div class="navbar tmoney-font">
+            <div class="navbar jamsil-font ">
                 <div class="container nav-container">
                     <div class="nav_logo">
                         <a href={% url 'main' %}>
@@ -31,13 +31,13 @@
                     <div class="menu-items">
                         <div class="menu_durumari d-flex flex-column text-center">
                             <div class="menu_logo text-center">
-                                <img src="../../img/gloverlogo.png" alt="">
+                                <img src={% static "images/gloverlogo.png"%} alt="">
                             </div>
                             <p class="tmoney font-bold">청천(靑天)</p>
                             <p class="tmoney">글로벌경영기술대학</p>
                             <div class="menu_line"></div>
                             <li><a href={% url 'introduce' %}><p class="shilla">서비스 소개</p><br /></a></li>
-                            <li><a href={% url 'makers' %}><p class="shilla">만든이들</p></a></li>
+                            <li><a href={% url 'makers'%}><p class="shilla">만든이들</p></a></li>
                             <div class="menu_line"></div>
                             <div class="menu_footer">
                                 <div class="firstline d-flex justify-content-center">
@@ -65,9 +65,9 @@
             <p class="header_add">글로벌 경영기술 대학 + 개천절 = 글천절</p>
 
             <div class="background_img">
-                <img src="../../img/cloud.png" alt="구름2" class="cloud1">                
-                <img src="../../img/cloud.png" alt="구름2" class="cloud2">
-                <img src="../../img/cloud.png" alt="구름3" class="cloud3">
+                <img src={% static "images/cloud.png"%} alt="구름2" class="cloud1">                
+                <img src={% static "images/cloud.png"%} alt="구름2" class="cloud2">
+                <img src={% static "images/cloud.png"%} alt="구름3" class="cloud3">
                 <!-- <img src="../../img/cloud.png" alt="구름4" class="cloud4"> -->
             </div>
         </div>
@@ -84,10 +84,11 @@
         </div>
 
         <!-- login section -->
-        <form class="login" id="login" method="post">
+        <form class="login" id="login" method="post" action="{% url 'search' %}">
             {% csrf_token %}
-            <select id="major_dropdown" name="major">
-                <option value="" disabled selected>학과 </option>
+            <!-- select 요소와 아이콘을 감싸는 컨테이너 추가 -->
+            <select id="major_dropdown" name="major" class="custom-select">
+                <option value="0" disabled selected>학과</option>
                 <option value="관광개발학과">관광개발학과</option>
                 <option value="경영학과">경영학과</option>
                 <option value="글로벌물류학부">글로벌물류학부</option>
@@ -96,18 +97,18 @@
             <div class="id">
                 <input type="text" name="student_id" placeholder="학번" required>
             </div>
+            {% comment %} <button class="submit" type="button">조회</button> {% endcomment %}
             <input class="submit" type="submit" value="조회">
         </form>
 
         <!-- first modal section  -->
-        {% comment %} {% if not agreed.consent %} {% endcomment %}
         <div class="modal" id="modal">
             <div class="modal_content">
                 <div class="agree_header">
                     글:Lover 사용을 위한<br>
                     개인정보 수집•이용 및 제공 동의서
                 </div>
-                <div class="agree_content">
+                <div class="agree_content jamsil-font">
                     <p class="black">
                         글로벌경영기술대학 학생회는 단과대학 소속
                         학우에게 아래와 같이 개인정보
@@ -144,29 +145,17 @@
                     </p>
 
                     <p class="remind"><i class="fa-regular fa-hand-point-right" style="color: #2a4884;"></i> 위와 같이 개인정보를<br> 수집이용하는데 동의하십니까?</p>
+
                 </div>
 
                 <div class="button">
-                    <span class="agree"><button id="agree_Btn">동의</button></span>
+                    <a href={% url 'search' %} class="agree"><button id="agree_Btn">동의</button></a>
                     <span class="close"><button>취소</button></span>
                 </div>
                 <p class="modal_footer">글로벌경영기술대학 학생회</p>
             </div>
         </div>
-        {% comment %} {% endif %} {% endcomment %}
-        <!-- second modal section -->
-        {% comment %} <div class="sec_modal" id="sec_modal">
-            <div class="sec_modal_content">
-                <p class="sec_header">
-                    면책조항
-                </p>
-                <p>
-                    면책조항 내용이 여기 들어갑니다..
-                </p>
-                <a href="../search/search.html" class="agree"><button>확인</button></a>
-                <span class="close"><button id="closeButton">닫기</button></span>
-            </div>
-        </div> {% endcomment %}
+        
 
         <!-- footer section -->
         <div class="footer-section jamsil-font">
@@ -184,6 +173,53 @@
             </div>
         </div>
     </div>
+    <script>
+        // 모달 열기
+        const modal = document.getElementById('modal');
+        const agreeButton = document.getElementById('agree_Btn');
+        const cancelButton = document.getElementById('cancel_Btn');
+        
+        // 현재 학생의 학번 가져오기 (서버에서 학번을 가져오는 방식으로 변경해야 함)
+        const studentId = "{{request.student.student_id}}";
+        
+        // 해당 학생의 최초 동의 여부 확인
+        const hasAgreed = localStorage.getItem(`agreed_${student_id}`) === 'true';
+        
+        // 조회 버튼 클릭 시 모달 열기 (최초 동의 여부에 따라)
+        const submitButton = document.querySelector('.submit');
+        submitButton.addEventListener('click', function (event) {
+            event.preventDefault(); // 폼 제출 방지
+            if (!hasAgreed) {
+                modal.style.display = 'block';
+            } else {
+                // 최초 동의가 아닐 때는 user_page/search.html로 이동
+                window.location.href =  searchUrl;
+            }
+        });
+        
+        var searchUrl = "{% url 'search' %}";
+        
+        // 동의 버튼 클릭 시 user_page/search.html로 이동 및 최초 동의 여부 저장
+        agreeButton.addEventListener('click', function () {
+            if (!hasAgreed) {
+                // 최초 동의 시 해당 학생의 최초 동의 여부를 로컬 스토리지에 저장
+                localStorage.setItem(`agreed_${student_id}`, 'true');
+                window.location.href =  searchUrl;
+            }
+        });
+        
+        // 취소 버튼 클릭 시 모달 닫기
+        cancelButton.addEventListener('click', function () {
+            modal.style.display = 'none';
+        });
+        
+        // 모달 외부 클릭 시 모달 닫기
+        window.addEventListener('click', function (event) {
+            if (event.target === modal) {
+                modal.style.display = 'none';
+            }
+        });
+        </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
 </body>
 </html>

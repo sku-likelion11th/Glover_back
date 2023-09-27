@@ -9,6 +9,7 @@ from django.conf import settings
 import os
 from django.http import JsonResponse
 from urllib.parse import unquote
+from django.urls import reverse
 
 # Create your views here.
 # 메인페이지
@@ -25,22 +26,56 @@ def main(request, student_id=None):
         # is_agreed = agreed.consent
         # print(is_agreed)
 
+        # 'search' URL 패턴에 대한 URL 생성
+        search_url = reverse('search')
+        
         return render(request, 'user_page/search.html', {'student_info': student_info, 'stamp_collections':stamp_collections, 'agreed': agreed})
 
     return render(request, 'user_page/index.html')
 
 
-# 동의 업뎃
-def check_consent(request):
-    if request.method == 'GET':
-        # 여기에서 사용자의 consent 상태를 확인하고 값을 가져옵니다.
-        # 예를 들어, 현재 로그인한 사용자의 consent 상태를 확인할 수 있습니다.
-        user = request.student
-        consent_status = user.profile.consent  # 사용자 프로필에 consent 필드가 있다고 가정
+# ?
+def search(request):
+    student_id = request.GET.get('student_id', '')
+     # 데이터베이스에서 학번을 사용하여 학생 객체를 가져옵니다.
+    student_obj = get_object_or_404(student, student_id=student_id)
+    # 학생 객체에서 이름을 추출합니다.
+    full_name = student_obj.full_name
+    
+    # 학번과 이름을 템플릿으로 전달
+    context = {
+        'student_id': student_id,
+        'full_name':full_name,
+    }
 
-        return JsonResponse({'consent_status': consent_status})
+    return render(request, 'user_page/search.html', context)
+
+
+def update_consent(request):
+    if request.method == 'POST':
+        student_id = request.POST.get('student_id')
+        student = student.objects.get(student_id=student_id)
+        
+        # 최초 동의 필드를 업데이트
+        student.consent = True
+        student.save()
+        
+        return JsonResponse({'message': '동의가 업데이트되었습니다.'})
     else:
-        return JsonResponse({'error': 'GET 요청이 아닙니다.'})
+        return JsonResponse({'message': 'POST 요청이 아닙니다.'}, status=400)
+
+
+# 동의 업뎃
+# def check_consent(request):
+#     if request.method == 'GET':
+#         # 여기에서 사용자의 consent 상태를 확인하고 값을 가져옵니다.
+#         # 예를 들어, 현재 로그인한 사용자의 consent 상태를 확인할 수 있습니다.
+#         user = request.student
+#         consent_status = user.profile.consent  # 사용자 프로필에 consent 필드가 있다고 가정
+
+#         return JsonResponse({'consent_status': consent_status})
+#     else:
+#         return JsonResponse({'error': 'GET 요청이 아닙니다.'})
 
 # 서비스 소개
 def introduce(request):
@@ -56,12 +91,12 @@ def makers(request):
 def a_main(request):
 	return render(
 		request,
-		'manager_page/manager_page.html'
+		'admin_page/a_main.html'
 	)
 
 
 # stamp 추가
-def add_stamp(request):
+def a_add(request):
     if request.method == 'POST':
         event_name = request.POST['event_name']
         event_info = request.POST['event_info']
@@ -86,17 +121,17 @@ def add_stamp(request):
     else:
         error_message = ""
 
-    return render(request, 'manager_page/add_stamp.html', {'error_message': error_message})
+    return render(request, 'admin_page/a_add.html', {'error_message': error_message})
 
 
 # stamp 리스트
-def stamp_list(request):
+def a_events(request):
     stamps = stamp.objects.all()
-    return render(request, 'manager_page/stamp_list.html', {'stamps': stamps})
+    return render(request, 'admin_page/a_events.html', {'stamps': stamps})
 
 
 #이벤트 참여자 체크하는 페이지
-def user_check(request):
+def a_search(request):
     events = stamp.objects.all()
     students = student.objects.all()
     selected_event = None
@@ -143,9 +178,9 @@ def user_check(request):
                    'stamp_collections':stamp_collections,
                    }
 
-        return render(request, 'manager_page/user_check.html', context)
+        return render(request, 'admin_page/a_search.html', context)
 
-    return render(request, 'manager_page/user_check.html', {'events': events, 'students': students})
+    return render(request, 'admin_page/a_search.html', {'events': events, 'students': students})
 
 
 # 스탬프 수정
@@ -178,7 +213,7 @@ def edit_stamp(request, event_name):
         stamp.objects.filter(event_name=event_name).update(**updated_data)
         return redirect('stamp_list')  # 수정 후 도장 목록으로 리디렉션
         
-    return render(request, 'manager_page/edit_stamp.html', {'stamp_instance': stamp_instance})
+    return render(request, 'admin_page/edit_stamp.html', {'stamp_instance': stamp_instance})
 
 
 # stamp 삭제
@@ -189,7 +224,7 @@ def delete_stamp(request, event_name):
         # Store the post pk before deleting the comment
         delstamp.delete()
         return redirect('stamp_list')
-    return render(request, 'manager_page/stamp_list.html', {'delstamp': delstamp})
+    return render(request, 'admin_page/a_events.html', {'delstamp': delstamp})
 
 # stamp 정보 보기
 def info_stamp(request, event_name):

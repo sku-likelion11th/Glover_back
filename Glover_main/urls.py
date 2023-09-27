@@ -9,10 +9,10 @@ urlpatterns = [
     path('search/', main, name='search'),
     
     # 관리자 페이지
-    path('manager_page/', a_main, name='manager_page'),
-    path('stamp_list/', stamp_list, name='stamp_list'),
-    path('add_stamp/', add_stamp, name='add_stamp'),
-    path('user_check/',user_check,name='user_check'),
+    path('a_main/', a_main, name='a_main'),
+    path('a_events/', a_events, name='a_events'),
+    path('a_add/', a_add, name='a_add'),
+    path('a_search/',a_search,name='a_search'),
     path('edit_stamp/<str:event_name>/', edit_stamp, name='edit_stamp'),
     path('delete_stamp/<str:event_name>/', delete_stamp, name='delete_stamp'),
     

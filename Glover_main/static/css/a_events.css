@@ -1,7 +1,14 @@
+/* font */
 @font-face {
     font-family: 'yg-jalnan';
     src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_four@1.2/JalnanOTF00.woff') format('woff');
     font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'TheJamsil5Bold';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2302_01@1.0/TheJamsil5Bold.woff2') format('woff2');
+    font-weight: 900;
     font-style: normal;
 }
 @font-face {
@@ -17,13 +24,16 @@
     font-style: normal;
 }
 @font-face {
-    font-family: 'TheJamsil5Bold';
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2302_01@1.0/TheJamsil5Bold.woff2') format('woff2');
-    font-weight: 700;
+    font-family: 'TmoneyRoundWindExtraBold';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-07@1.0/TmoneyRoundWindExtraBold.woff') format('woff');
+    font-weight: normal;
     font-style: normal;
 }
 .header-font {
     font-family: 'yg-jalnan', sans-serif;
+}
+.jamsil-font{
+    font-family: 'TheJanmsil5Bold', sans-serif;
 }
 .okman-font {
     font-family: 'OKGUNG', sans-serif;
@@ -31,19 +41,24 @@
 .shilla-font{
     font-family: 'Shilla_CultureB-Bold', sans-serif;
 }
-.jamsil-font{
-    font-family:'TheJamsil5Bold', sans-serif;
+.tmoney-font{
+    font-family: 'TmoneyRoundWindExtraBold', sans-serif;
 }
+
+
+/* display-container */
 .display-container {
-    box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
     max-width: 415px;   
     margin-left: auto;
     margin-right: auto;
     min-height: 100vh;
-    z-index: 0;
+    z-index: -10;
     background-color: #b2ccff;
     overflow-x: hidden;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
 }
+
+
 /* nav section */
 @import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
 
@@ -193,6 +208,7 @@
   display: none;
 }
 
+
 /*header-section*/
 .header-section {
     position:relative;
@@ -255,80 +271,99 @@
         -webkit-transform: translateX(700px) translateY(0px);
     }
 }
-/* background img */
-.background_img {
-    position: relative;
+.cloud-img1{
+    z-index:-1;
+    position:absolute;
+    margin-left:240px;
+    top:160px;
+    width:180px;
+    -webkit-animation-name: cloud-ani;
+    -webkit-animation-duration: 15s;
+    -webkit-animation-timing-function: linear;
+    -webkit-animation-fill-mode: forwards;
+    -webkit-animation-iteration-count: infinite;
 }
-/* 구름 애니메이션 넣기 */
-@-webkit-keyframes cloud-ani {
-    0% {
-        -webkit-transform: translateX(170px) translateY(0px);
-    }
+.cloud-img2{
+    z-index:-1;
+    position:absolute;
+    margin-top:240px;
+    margin-left:-50px;
+    width:180px;
+    -webkit-animation-name: cloud-ani;
+    -webkit-animation-duration: 15s;
+    -webkit-animation-timing-function: linear;
+    -webkit-animation-fill-mode: forwards;
+    -webkit-animation-iteration-count: infinite;
+}
+.cloud-img3{
+    z-index:-1;
+    position:absolute;
+    margin-top:480px;
+    margin-left:240px;
+    width:180px;
+    -webkit-animation-name: cloud-ani;
+    -webkit-animation-duration: 15s;
+    -webkit-animation-timing-function: linear;
+    -webkit-animation-fill-mode: forwards;
+    -webkit-animation-iteration-count: infinite;
+}
 
-    100% {
-        -webkit-transform: translateX(-500px) translateY(0px);
-    }
-}
-@-webkit-keyframes cloud-ani2 {
-    100% {
-        -webkit-transform: translateX(-170px) translateY(0px);
-    }
-
-    0% {
-        -webkit-transform: translateX(700px) translateY(0px);
-    }
-}
-.cloud1 {
-    z-index: -1;
-    height: auto;
-    position: absolute;
-    width: 180px;
-    right: -25px;
+/* stamp add section */
+.add-section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
     margin-top: -15px;
-    -webkit-animation-name: cloud-ani;
-    -webkit-animation-duration: 15s;
-    -webkit-animation-timing-function: linear;
-    -webkit-animation-fill-mode: forwards;
-    -webkit-animation-iteration-count: infinite;
+    margin-bottom: 30px;
+    z-index: 10;
 }
-.cloud2 {
-    z-index: -1;
-    height: auto;
-    position: absolute;
+.stamp-addBtn{
     width: 180px;
-    left: -25px;
-    top: 200px;
-    -webkit-animation-name: cloud-ani2;
-    -webkit-animation-duration: 18s;
-    -webkit-animation-timing-function: linear;
-    -webkit-animation-fill-mode: forwards;
-    -webkit-animation-iteration-count: infinite;
+    height: 52px;
+    border: 3px solid #91AEE6;
+    border-radius: 30px;
+    background-color: white;
+    box-shadow: 3px 3px 5px  rgba(0, 0, 0, 0.2);
+    z-index: 10;
 }
-.cloud3 {
-    z-index: -1;
-    height: auto;
-    position: absolute;
+.stamp-addBtn button{
     width: 180px;
-    right: -25px;
-    top: 480px;
-    -webkit-animation-name: cloud-ani;
-    -webkit-animation-duration: 15s;
-    -webkit-animation-timing-function: linear;
-    -webkit-animation-fill-mode: forwards;
-    -webkit-animation-iteration-count: infinite;
+    height: 23px;
+    background: none;
+    border: none;
+    text-align: center;
+    margin-top: 9px;
+    color: #91AEE6;
+    z-index: 10;
+    font-size: 18px;
 }
+.stamp-addBtn:hover {
+    width: 180px;
+    height: 52px;
+    border: 3px solid white;
+    border-radius: 30px;
+    background-color: #91AEE6;
+}
+.stamp-addBtn button:hover{
+    color: white;
+    margin-top: 9px;
+}
+
+
+
 /*stamp-section*/
 .stamp-section{
     position: absolute;
     text-align: center;
-    margin-top:-10px;
+    margin-top: -10px;
     margin-left: 30px;
     z-index: 1;
 }
 .stamp-pan{
     background-color:#DFEAFF;
     width: 350px;
-    height: 530px;
+    height: 460px;
     margin-left:auto;
     margin-right:auto;
     border-radius: 30px;
@@ -336,13 +371,13 @@
     border-color:#91AEE6;
     box-shadow: inset 5px 5px #bac9e6;
     overflow-y: scroll;
-    padding-bottom: 10px;
+    padding: 20px 0;
 }
 /* 스크롤바 트랙 위쪽 여백 공간 주기 위해서 */
 .stamp-pan::-webkit-scrollbar-button:vertical:start:decrement,
 .stamp-pan::-webkit-scrollbar-button:vertical:start:increment {
     display: block;
-    height: 25px;
+    height: 10px;
 }
 /* 만일 스크롤바 트랙 아래쪽도 여백 공간을 주고 싶다면 ... */
 .stamp-pan::-webkit-scrollbar-button:vertical:end:decrement {
@@ -369,8 +404,6 @@
     width: 80%;
     margin-left: 32px;
     border-radius: 30px;
-    border: 3px solid;
-    border-color:#91ade6b9
 }
 .s-number{
     margin-right:60px;
@@ -427,129 +460,271 @@
     height: 90px;
 }
 
-/*modal section*/
-.modal-bg {
-	background: rgba(0,0,0,0.8);
+
+/* modal section */
+#modal{
+    z-index: 100;
+    position:relative;
+    margin-top: -100px;
+}
+#modal.modal-bg {
+	background: rgba(0,0,0,0);
 	animation: fadeIn 0.5s cubic-bezier(0.165, 0.85, 0.44, 1) forwards;
 }
-
 .modal-bg .modal-cont {
 	opacity: 0;
 	animation: scaleUp 0.5s cubic-bezier(0.165, 0.85, 0.44, 1) forwards;
 }
 .modal-cont{
     width:310px;
-    height:320px;
+    height:530px;
     display:flex;
-    justify-content: center;
+    flex-direction:column;
+    position: absolute;
     background-color: white;
-    z-index: 100;
-    margin-left:52px;
-    margin-top:55px;
-    position:absolute;
     border-radius: 30px;
-    border: 4px solid;
-    border-color:#91AEE6;
+    border: 4px solid #91AEE6;
     transform: translateY(0);
     opacity: 1;
     transition: all 0.3s;
+    padding: 20px 20px 0 20px;
+    left: 52px;
 }
 .hidden{
     display:none;
+}   
+.modal-head{
+    display:flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.modal-head input {
+    border: none;
+    background: none;
+    color: #758DBB;
+    resize: none;
+    outline:none;  
+}
+.modal-head input::placeholder {
+    color: #758DBB;
 }
 .bi-x{
-    position:absolute;
     border: 0;
     background-color: transparent;
     height: 10px;
     z-index:10;
-    margin-left:230px;
-    margin-top:18px;
 }
 .name{
     color:#758DBB;
-    margin-top:25px;
-    margin-right:200px;
+    margin-top:3px;
 }
-.bar{
-    position:absolute;
-    width: 250px;
-    height: 2px;
-    margin-top:50px;
+.modal-bar{
+    width: 260px;
+    border: 2px solid #91AEE6;
+    border-radius: 5px;
+    margin-top: 5px;
 }
+
+/* form section */
+/* from section > textarea */
 .detail{
-    position:absolute;
-    margin-top: 60px;
+    margin-top: 10px;
     background-color: #e7eeff;
     width: 250px;
     height: 150px;
     border-radius: 20px;
+    border:none;
+    padding-top:10px;
+    padding-left:10px;
+    padding-right:10px;
+    resize: none;
+    outline:none;   
+    color: #858585;
 }
-.detail p{
-    margin-top:15px;
-    margin-left:15px;
-    color:#758DBB
-}
-.bar2{
-    position:absolute;
-    width: 250px;
-    height: 2px;
-    margin-top:220px;
+.detail::placeholder {
+    color: #858585;
+    font-size: 14px;
+    font-weight: 500;
 }
 .term{
-    position:absolute;
-    margin-top:230px;
     color:#758DBB;
-    margin-right:210px;
+    margin-bottom:5px;
 }
-.bi-calendar-week1{
-    position:absolute;
-    margin-top:260px;
-    margin-right:220px;
+/* form section > date */
+.date{
+    display:flex;
+    flex-direction:row;
+    justify-content: space-around;
+    color:#91AEE6;
+}
+input[type="date"] {
+    width:100px;
+    height:30px;
+    font-size:12px;
+    color:#91AEE6;
+    background-color: #E5EFFE;
+    border:none;
+    border-radius: 22px;
+    text-align: center;
+    outline:none;
+}
+.modal-bar2 {
+    width: 260px;
+    border: 2px solid #91AEE6;
+    border-radius: 5px;
+    margin: 10px 0;
+    
+}
+
+/* form section > file */
+.img{
+    display:flex;
+    flex-direction:row;
+    justify-content: space-around;
+    margin-top: 20px;
+}
+.file-box{
+    display:flex;
+    flex-direction:column;
+    text-align: center;
     color:#758DBB;
+    font-size:14px;
 }
-.start{
-    position:absolute;
-    margin-top:260px;
-    margin-right:115px;
-    background-color: #e7eeff;
-    width: 80px;
-    height: 25px;
-    border-radius: 10px;
+/* 파일 업로드 기존 디자인 없애기 */
+.file-box input[type="file"] {
+    position: absolute;
+    width: 0;
+    height: 0;
+    padding: 0;
+    overflow: hidden;
+    border: 0;
 }
-.start p{
-    font-size: small;
-    margin-left:10px;
-    margin-top:1px;
+.file-box p{
+    margin-bottom:5px;
+}
+/* 파일(이미지) 미리보기 박스 */
+.img-box{
+    width:98px;
+    height:98px;
+    border:2px solid #91AEE6;
+    border-radius: 5px;
+    cursor:pointer;
+}
+
+/* form > button */
+.modalBtn{
+    margin: 20px 0;
+}
+.modalBtn .submit{
+    width: 82px;
+    height: 34px;
+    border:1px solid #91AEE6;
+    border-radius: 5px;
+    background-color: #91AEE6;
+    color:#ffffff;
+    margin-right:40px;
+}
+.modalBtn .submit:hover {
+    width: 82px;
+    height: 34px;
+    border: 3px solid #91AEE6;
+    background-color: white;
+    color: #91AEE6;
+}
+.modalBtn .del{
+    width: 82px;
+    height: 34px;
+    border: 3px solid #91AEE6;
+    border-radius: 5px;
+    background-color:#ffffff;
+    color: #91AEE6;
+}
+.modalBtn .del:hover{
+    width:82px;
+    height: 34px;
+    background-color: #91AEE6;
+    color: white;
+}
+
+/* saveBtn model */
+#modal_saveBtn {
+    z-index: 100;
+    position:relative;
+    margin-top: -100px;
+}
+#modal_saveBtn .modal-savebg {
+	background: rgba(0,0,0,0);
+	animation: fadeIn 0.5s cubic-bezier(0.165, 0.85, 0.44, 1) forwards;
+}
+.modal-savebg .modal-save {
+	opacity: 0;
+	animation: scaleUp 0.5s cubic-bezier(0.165, 0.85, 0.44, 1) forwards;
+}
+.modal-save{
+    width: 310px;
+    height: 200px;
+    display:flex;
+    flex-direction:column;
+    position: absolute;
+    background-color: white;
+    border-radius: 30px;
+    border: 4px solid #91AEE6;
+    transform: translateY(0);
+    opacity: 1;
+    transition: all 0.3s;
+    padding: 20px 20px 0 20px;
+    left: 52px;
+}
+.save_question {
+    width: 250px;
+    height: 50px;
+    background-color: #E5EFFE;
     color: #758DBB;
+    border-radius: 30px;
+    text-align: center;
+    font-size: 20px;
+    padding-top: 10px;
+    margin-top: 20px;
 }
-.side{
-    position:absolute;
-    margin-top: 260px;
-    margin-right: 4px;
-    color: #758DBB;
+.yonBtn{
+    margin-top: 30px;
 }
-.finish{
-    position:absolute;
-    margin-top:260px;
-    margin-left:165px;
-    background-color: #e7eeff;
-    width: 80px;
-    height: 25px;
-    border-radius: 10px;
+.yonBtn .yesBtn{
+    width: 82px;
+    height: 34px;
+    border:1px solid #91AEE6;
+    border-radius: 5px;
+    background-color: #91AEE6;
+    color:#ffffff;
+    margin-right:40px;
 }
-.finish p{
-    font-size: small;
-    margin-left:10px;
-    margin-top:1px;
-    color: #758DBB;
+.yonBtn .yesBtn:hover {
+    width: 82px;
+    height: 34px;
+    border: 3px solid #91AEE6;
+    background-color: white;
+    color: #91AEE6;
 }
-.bi-calendar-week2{
-    position:absolute;
-    margin-top:260px;
-    margin-left:55px;
-    color:#758DBB;
+.yonBtn .noBtn{
+    width: 82px;
+    height: 34px;
+    border: 3px solid #91AEE6;
+    border-radius: 5px;
+    background-color:#ffffff;
+    color: #91AEE6;
 }
+.yonBtn .noBtn:hover{
+    width:82px;
+    height: 34px;
+    background-color: #91AEE6;
+    color: white;
+}
+.hidden2 {
+    display: none;
+}
+
+
+
 
 @keyframes fadeIn {
 	0% {background: rgba(0,0,0,0)}
@@ -574,8 +749,8 @@
 }
 /* footer section */
 .footer-section {
-    margin-top: 550px;
-    margin-bottom: 20px;
+    margin-top: 600px;
+    margin-bottom: 30px;
 }
 .footer-section p{
     z-index: 10;
