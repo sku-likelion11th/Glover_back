@@ -165,7 +165,7 @@ def a_search(request):
                 collection.save()
             except:
                 pass
-        
+        # print(students)
         if student_id:
             stamp_collections = stamp_collection.objects.filter(student__student_id__icontains=student_id, stamp=selected_event)
         else:
@@ -225,6 +225,7 @@ def delete_stamp(request, event_name):
         delstamp.delete()
         return redirect('stamp_list')
     return render(request, 'admin_page/a_events.html', {'delstamp': delstamp})
+
 
 # stamp 정보 보기
 def info_stamp(request, event_name):

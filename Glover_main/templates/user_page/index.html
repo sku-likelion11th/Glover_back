@@ -97,7 +97,6 @@
             <div class="id">
                 <input type="text" name="student_id" placeholder="학번" required>
             </div>
-            {% comment %} <button class="submit" type="button">조회</button> {% endcomment %}
             <input class="submit" type="submit" value="조회">
         </form>
 
@@ -173,53 +172,6 @@
             </div>
         </div>
     </div>
-    <script>
-        // 모달 열기
-        const modal = document.getElementById('modal');
-        const agreeButton = document.getElementById('agree_Btn');
-        const cancelButton = document.getElementById('cancel_Btn');
-        
-        // 현재 학생의 학번 가져오기 (서버에서 학번을 가져오는 방식으로 변경해야 함)
-        const studentId = "{{request.student.student_id}}";
-        
-        // 해당 학생의 최초 동의 여부 확인
-        const hasAgreed = localStorage.getItem(`agreed_${student_id}`) === 'true';
-        
-        // 조회 버튼 클릭 시 모달 열기 (최초 동의 여부에 따라)
-        const submitButton = document.querySelector('.submit');
-        submitButton.addEventListener('click', function (event) {
-            event.preventDefault(); // 폼 제출 방지
-            if (!hasAgreed) {
-                modal.style.display = 'block';
-            } else {
-                // 최초 동의가 아닐 때는 user_page/search.html로 이동
-                window.location.href =  searchUrl;
-            }
-        });
-        
-        var searchUrl = "{% url 'search' %}";
-        
-        // 동의 버튼 클릭 시 user_page/search.html로 이동 및 최초 동의 여부 저장
-        agreeButton.addEventListener('click', function () {
-            if (!hasAgreed) {
-                // 최초 동의 시 해당 학생의 최초 동의 여부를 로컬 스토리지에 저장
-                localStorage.setItem(`agreed_${student_id}`, 'true');
-                window.location.href =  searchUrl;
-            }
-        });
-        
-        // 취소 버튼 클릭 시 모달 닫기
-        cancelButton.addEventListener('click', function () {
-            modal.style.display = 'none';
-        });
-        
-        // 모달 외부 클릭 시 모달 닫기
-        window.addEventListener('click', function (event) {
-            if (event.target === modal) {
-                modal.style.display = 'none';
-            }
-        });
-        </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
 </body>
 </html>

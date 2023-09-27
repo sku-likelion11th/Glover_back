@@ -26,7 +26,7 @@
         </tr>
 
         <!-- 현재 이미지 출력 -->
-        <tr>
+        {% comment %} <tr>
             <td>before_image : <input type="file" name="before_image" accept=".jpg, .jpeg, .png, .gif"></td>
             <td>
                 {% if stamp_instance.before_image %}
@@ -34,7 +34,7 @@
                     <input type="file" style="display:none;">
                 {% endif %}
             </td>
-        </tr>
+        </tr> {% endcomment %}
         <tr>
             <td>after_image : <input type="file" name="after_image" accept=".jpg, .jpeg, .png, .gif"></td>
             <td>
